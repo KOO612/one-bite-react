@@ -18,8 +18,10 @@ let person = {
 };
 
 let { name, age: myAge, hobby } = person;
-console.log(name, myAge, hobby);
+// console.log(name, myAge, hobby);
 
-const func = (person) => {};
-
+// 3. 객체 구조분해 할당을 이용해 함수의 매개변수를 받는 방법
+const func = ({ name, age, hobby }) => {
+  console.log(name, age, hobby);
+};
 func(person);
