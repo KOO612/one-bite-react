@@ -1,10 +1,10 @@
-import Register from '../components/Register';
+import HookEx from '../components/HookEx';
 import './App.css';
 
 function App() {
   return (
     <div>
-      <Register />
+      <HookEx />
     </div>
   );
 }

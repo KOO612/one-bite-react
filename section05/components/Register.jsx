@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -8,8 +8,13 @@ const Register = () => {
     bio: '',
   });
 
+  const countRef = useRef(0);
+  const inputRef = useRef();
+
   // 통합 이벤트 핸들러
   const onChange = (e) => {
+    countRef.current++;
+    console.log(countRef.current);
     setInput({
       ...input,
       // name과 value 필수
@@ -21,10 +26,17 @@ const Register = () => {
     });
   };
 
+  const onSubmit = () => {
+    if (input.name === '') {
+      // 이름 입력 돔 요소에 포커스
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div>
       <div>
-        <input name="name" type="text" value={input.name} onChange={onChange} placeholder={'이름'} />
+        <input ref={inputRef} name="name" type="text" value={input.name} onChange={onChange} placeholder={'이름'} />
       </div>
       <div>
         <input name="birth" type="date" onChange={onChange} value={input.birth} />
@@ -40,6 +52,8 @@ const Register = () => {
       <div>
         <textarea name="bio" value={input.bio} onChange={onChange} />
       </div>
+
+      <button onClick={onSubmit}>제출</button>
     </div>
   );
 };
