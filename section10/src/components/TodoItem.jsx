@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './TodoItem.css';
 
 const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
@@ -19,4 +19,16 @@ const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
   );
 };
 
-export default TodoItem;
+// 고차 컴포넌트 (HOC)
+// 두번째 인수로 함수
+export default memo(TodoItem, (prevProps, nextProps) => {
+  // 반환값에 따라 Props가 바뀌었는지 판단
+  // T -> props 안바뀜 => 리렌더링 x
+  // F -> props 바뀜 => 리렌터링 o
+  if (prevProps.id !== nextProps.id) return false;
+  if (prevProps.isDone !== nextProps.isDone) return false;
+  if (prevProps.content !== nextProps.content) return false;
+  if (prevProps.date !== nextProps.date) return false;
+
+  return true;
+});
