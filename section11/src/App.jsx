@@ -2,7 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
-import { useState, useRef, useReducer, useCallback, createContext } from 'react';
+import { useState, useRef, useReducer, useCallback, createContext, useMemo } from 'react';
 const mockData = [
   {
     id: 0,
@@ -39,7 +39,9 @@ function reducer(state, action) {
 
 // 데이터를 하위에 있는 컴포넌트에 공급하기 위해서이기 때문에
 // App 안에 넣으면 리렌더링 될 때마다 새로 생성되니깐 밖에 작성
-export const TodoContext = createContext();
+export const TodoStateContext = createContext();
+
+export const TodoDispatchContext = createContext();
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -73,20 +75,18 @@ function App() {
     });
   };
 
+  const memoizedDispatch = useMemo(() => {
+    return { onCreate, onDelete, onUpdate };
+  }, []);
   return (
     <div className="App">
       <Header />
-      <TodoContext.Provider
-        value={{
-          todos,
-          onCreate,
-          onUpdate,
-          onDelete,
-        }}
-      >
-        <Editor />
-        <List />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }
