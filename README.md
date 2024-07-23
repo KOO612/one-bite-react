@@ -1,2 +1,5 @@
-# one-bite-react
-one-bite-react 학습
+# react 학습
+
+ONEBITE REACT
+
+react docs
