@@ -1,0 +1,9 @@
+.App {
+  /* 자식 요소들의 배치를 좀 더 유연하게 할 수 있도록 */
+  display: flex;
+  /* flex의 방향 세로로 */
+  flex-direction: column;
+  /* 요소들의 간격 */
+  /* display가 flex인 요소만 적용 가능 */
+  gap: 10px;
+}
