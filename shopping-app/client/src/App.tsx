@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface ProductType {
   id: number;
@@ -21,17 +21,43 @@ function App() {
   const [explanation, setExplanation] = useState('');
   const [price, setPrice] = useState(0);
 
+  const fakeId = useRef(0);
+  const handleCreate = (newProduct: Omit<ProductType, 'id'>) => {
+    fakeId.current += 1;
+    setProducts([
+      ...products,
+      {
+        ...newProduct,
+        id: fakeId.current,
+      },
+    ]);
+  };
+
   return (
     <>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('제출');
+          handleCreate({
+            name,
+            explanation,
+            price,
+          });
         }}
       >
-        <input type="text" placeholder="상품 이름" onChange={(e) => setName(e.target.value)} />
-        <input type="text" placeholder="상품 설명" onChange={(e) => setExplanation(e.target.value)} />
-        <input type="number" placeholder="상품 가격" onChange={(e) => setPrice(parseInt(e.target.value, 10))} />
+        <input value={name} type="text" placeholder="상품 이름" onChange={(e) => setName(e.target.value)} />
+        <input
+          value={explanation}
+          type="text"
+          placeholder="상품 설명"
+          onChange={(e) => setExplanation(e.target.value)}
+        />
+        <input
+          value={price}
+          type="number"
+          placeholder="상품 가격"
+          onChange={(e) => setPrice(parseInt(e.target.value, 10))}
+        />
         <input type="submit" value="상품 만들기" />
       </form>
       {products.map((product) => (
