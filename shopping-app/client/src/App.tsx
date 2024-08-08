@@ -7,6 +7,43 @@ interface ProductType {
   price: number;
 }
 
+interface ProductItemProps {
+  product: ProductType;
+  onDelete: (id: number) => void;
+  onUpdate: (id: number) => void;
+}
+
+const ProductItem = ({ product, onDelete, onUpdate }: ProductItemProps) => {
+  const { id, name, price, explanation } = product;
+
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  return (
+    <div>
+      <div>{id}</div>
+      <div>{name}</div>
+      <div>{price}</div>
+      <div>{explanation}</div>
+      <button
+        type="button"
+        onClick={() => {
+          onDelete(id);
+        }}
+      >
+        삭제하기
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setIsEditMode((prev) => !prev);
+        }}
+      >
+        수정하기
+      </button>
+    </div>
+  );
+};
 function App() {
   const [products, setProducts] = useState<ProductType[]>([
     {
@@ -22,6 +59,7 @@ function App() {
   const [price, setPrice] = useState(0);
 
   const fakeId = useRef(0);
+
   const handleCreate = (newProduct: Omit<ProductType, 'id'>) => {
     fakeId.current += 1;
     setProducts([
@@ -31,6 +69,18 @@ function App() {
         id: fakeId.current,
       },
     ]);
+  };
+
+  const handleDelete = (id: number) => setProducts(products.filter((product) => product.id !== id));
+
+  const handleUpdate = (id: number) => {
+    const updateProduct = {
+      id,
+      name: '수정된 상품',
+      explanation: '수정된 상품',
+      price: 0,
+    };
+    setProducts(products.map((product) => (product.id === id ? updateProduct : product)));
   };
 
   return (
@@ -61,12 +111,7 @@ function App() {
         <input type="submit" value="상품 만들기" />
       </form>
       {products.map((product) => (
-        <div key={product.id}>
-          <div>{product.id}</div>
-          <div>{product.name}</div>
-          <div>{product.price}</div>
-          <div>{product.explanation}</div>
-        </div>
+        <ProductItem key={product.id} product={product} onDelete={handleDelete} onUpdate={handleUpdate} />
       ))}
     </>
   );
