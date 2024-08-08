@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProductType {
   id: number;
@@ -23,7 +24,9 @@ const ProductItem = ({ product, onDelete, onUpdate }: ProductItemProps) => {
   return (
     <div>
       <div>{id}</div>
-      <div>{name}</div>
+      <div>
+        <Link to={'/${id}'}>{name}</Link>
+      </div>
       <div>{price}</div>
       <div>{explanation}</div>
       <button
