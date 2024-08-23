@@ -1,13 +1,12 @@
 import Button from './components/Button';
 import './App.css';
+import Register from './components/Register';
 
 function App() {
   return (
-    <div>
-      <Button text={'블로그'}>
-        <div>자식</div>
-      </Button>
-    </div>
+    <>
+      <Register></Register>
+    </>
   );
 }
 
