@@ -1,11 +1,10 @@
-import Button from './components/Button';
 import './App.css';
-import Register from './components/Register';
+import HookEx2 from './components/HookEx2';
 
 function App() {
   return (
     <>
-      <Register></Register>
+      <HookEx2 />
     </>
   );
 }
