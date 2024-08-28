@@ -1,5 +1,7 @@
 .App {
   /* 자식 요소들의 배치를 좀 더 유연하게 할 수 있도록 */
+  width: 500px;
+  margin: 0 auto;
   display: flex;
   /* flex의 방향 세로로 */
   flex-direction: column;
